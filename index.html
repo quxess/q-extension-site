@@ -3,214 +3,461 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Q Extension</title>
+  <title>Q Extension — Chrome Extensions by NYAN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --border: #e2e0d8;
+      --text: #1c1b18;
+      --muted: #888580;
+      --accent: #2d6a4f;
+      --accent-light: #e8f5ee;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 780px;
-      margin: 60px auto;
-      padding: 0 24px 80px;
-      line-height: 1.7;
-      color: #1a1a1a;
-      background: #fff;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
-    h1 {
-      font-size: 1.8em;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .updated {
-      font-size: 0.9em;
-      color: #666;
-      margin-bottom: 36px;
-    }
-    h2 {
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-top: 40px;
-      margin-bottom: 10px;
-      color: #111;
-    }
-    p {
-      margin-bottom: 14px;
-      color: #333;
-    }
-    ul {
-      margin: 10px 0 14px 20px;
-      color: #333;
-    }
-    ul li {
-      margin-bottom: 6px;
-    }
-    .extension-block {
-      background: #f7f7f7;
-      border-left: 3px solid #ddd;
-      padding: 14px 18px;
-      margin: 10px 0 16px;
-      border-radius: 0 6px 6px 0;
-    }
-    .extension-block strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #111;
-    }
-    .extension-block ul {
-      margin: 0 0 0 16px;
-    }
-    .third-party-block {
-      background: #f7f7f7;
-      border-left: 3px solid #ddd;
-      padding: 14px 18px;
-      margin: 10px 0 16px;
-      border-radius: 0 6px 6px 0;
-    }
-    .third-party-block strong {
-      display: block;
-      margin-bottom: 8px;
-      color: #111;
-    }
-    .third-party-block ul {
-      margin: 0 0 0 16px;
-    }
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .badge-row {
+
+    /* ── Header ── */
+    header {
+      padding: 48px 40px 0;
+      max-width: 960px;
+      margin: 0 auto;
       display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 32px;
     }
-    .badge {
-      background: #f0f0f0;
-      border-radius: 20px;
-      padding: 4px 14px;
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .brand-name {
+      font-family: var(--mono);
+      font-size: 1.1em;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .brand-name span {
+      color: var(--accent);
+    }
+
+    .brand-tagline {
+      font-size: 0.82em;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .header-nav a {
       font-size: 0.85em;
-      color: #444;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
     }
+
+    .header-nav a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 40px 48px;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75em;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2em, 5vw, 3.2em);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1em;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── Extensions Grid ── */
+    .extensions {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 1em;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.7em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 400;
+    }
+
+    .badge-live {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .badge-review {
+      background: #fef3e2;
+      color: #b45309;
+    }
+
+    .card-desc {
+      font-size: 0.88em;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-features li {
+      font-size: 0.82em;
+      color: #555;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .card-features li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: var(--mono);
+      flex-shrink: 0;
+      margin-top: 0px;
+    }
+
+    .card-footer {
+      padding-top: 4px;
+    }
+
+    .cws-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82em;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .cws-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .cws-link svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .cws-link-disabled {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82em;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: default;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    /* ── Footer ── */
     footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid #eee;
-      font-size: 0.9em;
-      color: #888;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.8em;
+      color: var(--muted);
+    }
+
+    .footer-left span { color: var(--accent); }
+
+    .footer-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-right a {
+      font-size: 0.82em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-right a:hover { color: var(--text); }
+
+    /* ── Fade in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero { animation: fadeUp 0.5s ease both; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
+    .card:nth-child(3) { animation: fadeUp 0.5s 0.26s ease both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      header, .hero, .extensions, footer { padding-left: 20px; padding-right: 20px; }
+      .hero { padding-top: 48px; }
+      .extensions { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: March 2026</p>
+  <header>
+    <div class="brand">
+      <div class="brand-name">Q<span>.</span>extension</div>
+      <div class="brand-tagline">Small tools. Real impact.</div>
+    </div>
+    <nav class="header-nav">
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
+  </header>
 
-  <p>This privacy policy applies to the following Chrome extensions developed by <strong>Q Extension</strong>:</p>
-  <div class="badge-row">
-    <span class="badge">SnapShot</span>
-    <span class="badge">Tab Volume</span>
-    <span class="badge">Save As JPG/PNG</span>
-  </div>
+  <section class="hero">
+    <div class="hero-label">Chrome Extensions</div>
+    <h1>Browser tools that stay <em>out of your way</em></h1>
+    <p class="hero-sub">
+      A small collection of focused Chrome extensions — each one built to solve 
+      one thing well, with no bloat, no tracking, and no subscriptions.
+    </p>
+  </section>
 
-  <h2>What Data We Collect</h2>
-  <p>We do not collect, store, or transmit any personal data.</p>
-  <p>Specifically, we do not collect:</p>
-  <ul>
-    <li>Browsing history</li>
-    <li>Website content</li>
-    <li>Personal identification information</li>
-    <li>Payment information</li>
-    <li>Usage analytics or telemetry</li>
-  </ul>
+  <section class="extensions">
 
-  <h2>License Key Validation (Tab Volume)</h2>
-  <p>
-    Tab Volume offers optional premium features unlocked via a one-time license key purchase.
-    If you purchase a premium license, the license key you enter is sent to Lemon Squeezy
-    (our payment and licensing provider) solely to validate your purchase. This validation
-    happens once on activation and periodically in the background to confirm the license
-    remains valid.
-  </p>
-  <p>
-    We do not store or have access to your payment details. All payment processing is handled
-    entirely by Lemon Squeezy. For information on how Lemon Squeezy handles your data, please
-    refer to their privacy policy at
-    <a href="https://www.lemonsqueezy.com/privacy" target="_blank">lemonsqueezy.com/privacy</a>.
-  </p>
-  <p>
-    SnapShot and Save As JPG/PNG are currently fully free and do not involve any license key
-    validation or communication with external services.
-  </p>
+    <!-- SnapShot -->
+    <div class="card">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="card-icon">📸</div>
+          <div class="card-title">SnapShot</div>
+        </div>
+        <span class="badge badge-live">Live</span>
+      </div>
+      <p class="card-desc">
+        Capture anything on the web — visible area, selected region, or the full page. 
+        Annotate, blur, and save right after capture.
+      </p>
+      <ul class="card-features">
+        <li>Three capture modes including full page</li>
+        <li>Built-in annotation and blur tools</li>
+        <li>Screenshot history with re-edit</li>
+      </ul>
+      <div class="card-footer">
+        <a class="cws-link" href="https://chromewebstore.google.com/detail/snapshot/genafeokeecllomennekdnppfmodfjhh?hl=en-US&utm_source=ext_sidebar" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Add to Chrome
+        </a>
+      </div>
+    </div>
 
-  <h2>Data Stored Locally</h2>
-  <p>
-    All data stored by these extensions remains on your device only and is never transmitted to us.
-  </p>
+    <!-- Tab Volume -->
+    <div class="card">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="card-icon">🔊</div>
+          <div class="card-title">Tab Volume</div>
+        </div>
+        <span class="badge badge-review">In Review</span>
+      </div>
+      <p class="card-desc">
+        Control audio volume independently for every tab playing sound — 
+        boost quiet tabs, silence distracting ones.
+      </p>
+      <ul class="card-features">
+        <li>Per-tab volume from 0% to 150%</li>
+        <li>Mute individual tabs or all at once</li>
+        <li>Spotify and DRM audio support</li>
+      </ul>
+      <div class="card-footer">
+        <span class="cws-link-disabled">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Coming soon
+        </span>
+      </div>
+    </div>
 
-  <div class="extension-block">
-    <strong>SnapShot</strong>
-    <ul>
-      <li>Screenshot history (images stored on your device only)</li>
-      <li>User preferences (filename pattern, image format, theme)</li>
-    </ul>
-  </div>
+    <!-- Save As JPG/PNG -->
+    <div class="card">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="card-icon">🖼️</div>
+          <div class="card-title">Save As JPG/PNG</div>
+        </div>
+        <span class="badge badge-review">In Review</span>
+      </div>
+      <p class="card-desc">
+        Right-click any image on the web and save it in your preferred format. 
+        Converts WebP and other formats instantly, client-side.
+      </p>
+      <ul class="card-features">
+        <li>Right-click any image to convert</li>
+        <li>JPG and PNG output with quality control</li>
+        <li>No upload — works entirely in your browser</li>
+      </ul>
+      <div class="card-footer">
+        <span class="cws-link-disabled">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Coming soon
+        </span>
+      </div>
+    </div>
 
-  <div class="extension-block">
-    <strong>Tab Volume</strong>
-    <ul>
-      <li>Per-tab volume and mute settings (premium users only)</li>
-      <li>License key and premium status</li>
-    </ul>
-  </div>
+  </section>
 
-  <div class="extension-block">
-    <strong>Save As JPG/PNG</strong>
-    <ul>
-      <li>User preferences (output format, JPEG quality setting)</li>
-    </ul>
-  </div>
-
-  <h2>Third Party Services</h2>
-  <p>
-    <strong>Tab Volume only</strong> interacts with the following third party service:
-  </p>
-  <div class="third-party-block">
-    <strong>Lemon Squeezy (lemonsqueezy.com)</strong>
-    <ul>
-      <li>Purpose: License key activation and validation</li>
-      <li>Data sent: License key only</li>
-      <li>Privacy policy: <a href="https://www.lemonsqueezy.com/privacy" target="_blank">lemonsqueezy.com/privacy</a></li>
-    </ul>
-  </div>
-  <p>
-    SnapShot and Save As JPG/PNG do not communicate with any external services.
-    All processing happens locally on your device.
-  </p>
-
-  <h2>Permissions</h2>
-  <p>
-    Each extension requests only the permissions necessary for its core functionality.
-    Detailed permission justifications are provided on each extension's Chrome Web Store listing.
-  </p>
-
-  <h2>Changes to This Policy</h2>
-  <p>
-    When SnapShot and Save As JPG/PNG introduce premium features in the future, this policy
-    will be updated accordingly. The updated version will always be posted at this URL with
-    a revised date.
-  </p>
-
-  <h2>Contact</h2>
-  <p>
-    If you have any questions about this privacy policy, please contact us at:
-    <a href="mailto:quxess@proton.me">quxess@proton.me</a>
-  </p>
+  <hr class="divider">
 
   <footer>
-    <strong>Q Extension</strong> &nbsp;·&nbsp;
-    <a href="https://qextension.lemonsqueezy.com" target="_blank">qextension.lemonsqueezy.com</a>
+    <div class="footer-left">Q<span>.</span>extension</div>
+    <div class="footer-right">
+      <a href="https://qextension.lemonsqueezy.com" target="_blank">Store</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
   </footer>
 
 </body>
