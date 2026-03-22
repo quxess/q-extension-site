@@ -4,213 +4,503 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Q Extension</title>
+  <link rel="icon" type="image/png" href="icons/snapshot.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Geist+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --border: #e8e6e1;
+      --border-light: #f0eee9;
+      --text: #18181b;
+      --text-secondary: #52525b;
+      --text-tertiary: #a1a1aa;
+      --accent: #1d4e36;
+      --accent-soft: #e6f2ec;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono: 'Geist Mono', 'SF Mono', monospace;
+      --sans: 'Outfit', system-ui, sans-serif;
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 780px;
-      margin: 60px auto;
-      padding: 0 24px 80px;
-      line-height: 1.7;
-      color: #1a1a1a;
-      background: #fff;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    h1 {
-      font-size: 1.8em;
-      font-weight: 700;
-      margin-bottom: 6px;
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
     }
-    .updated {
-      font-size: 0.9em;
-      color: #666;
-      margin-bottom: 36px;
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 32px;
     }
-    h2 {
-      font-size: 1.1em;
-      font-weight: 600;
-      margin-top: 40px;
-      margin-bottom: 10px;
-      color: #111;
+
+    /* ── Header ── */
+    header {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 40px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
-    p {
-      margin-bottom: 14px;
-      color: #333;
-    }
-    ul {
-      margin: 10px 0 14px 20px;
-      color: #333;
-    }
-    ul li {
-      margin-bottom: 6px;
-    }
-    .extension-block {
-      background: #f7f7f7;
-      border-left: 3px solid #ddd;
-      padding: 14px 18px;
-      margin: 10px 0 16px;
-      border-radius: 0 6px 6px 0;
-    }
-    .extension-block strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #111;
-    }
-    .extension-block ul {
-      margin: 0 0 0 16px;
-    }
-    .third-party-block {
-      background: #f7f7f7;
-      border-left: 3px solid #ddd;
-      padding: 14px 18px;
-      margin: 10px 0 16px;
-      border-radius: 0 6px 6px 0;
-    }
-    .third-party-block strong {
-      display: block;
-      margin-bottom: 8px;
-      color: #111;
-    }
-    .third-party-block ul {
-      margin: 0 0 0 16px;
-    }
-    a {
-      color: #0066cc;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
+      color: var(--text);
     }
-    a:hover {
-      text-decoration: underline;
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 0.75em;
+      font-weight: 500;
     }
+
+    .brand-text {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    .header-nav a {
+      font-size: 0.82em;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover { color: var(--text); }
+
+    /* ── Policy content ── */
+    .policy {
+      padding: 72px 0 80px;
+    }
+
+    .policy-header {
+      margin-bottom: 48px;
+    }
+
+    .policy-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2em, 5vw, 2.8em);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .policy-header .updated {
+      font-family: var(--mono);
+      font-size: 0.78em;
+      color: var(--text-tertiary);
+    }
+
     .badge-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 32px;
+      margin: 20px 0 32px;
     }
+
     .badge {
-      background: #f0f0f0;
-      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: 0.72em;
+      font-weight: 500;
       padding: 4px 14px;
-      font-size: 0.85em;
-      color: #444;
+      border-radius: 100px;
+      background: var(--accent-soft);
+      color: var(--accent);
     }
-    footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid #eee;
+
+    .policy-intro {
+      font-size: 0.95em;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* Section styling */
+    .section {
+      margin-top: 40px;
+    }
+
+    .section h2 {
+      font-family: var(--sans);
+      font-size: 1.05em;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      font-size: 0.92em;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section ul {
+      margin: 8px 0 14px 20px;
+      color: var(--text-secondary);
+      font-size: 0.92em;
+      line-height: 1.75;
+    }
+
+    .section ul li {
+      margin-bottom: 4px;
+    }
+
+    .section a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-soft);
+      transition: border-color 0.2s;
+    }
+
+    .section a:hover {
+      border-color: var(--accent);
+    }
+
+    /* Info blocks */
+    .info-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+
+    .info-block strong {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-size: 0.9em;
-      color: #888;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .info-block-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .info-block-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .info-block ul {
+      margin: 0 0 0 16px;
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .info-block ul li {
+      margin-bottom: 2px;
+    }
+
+    /* Third party block */
+    .third-party {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+
+    .third-party strong {
+      display: block;
+      font-size: 0.9em;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .third-party ul {
+      margin: 0 0 0 16px;
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Divider ── */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Footer ── */
+    footer {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 28px 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.75em;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-left .sep { color: var(--border); }
+
+    .footer-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-right a {
+      font-size: 0.8em;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-right a:hover { color: var(--text); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header { animation: fadeUp 0.4s ease both; }
+    .policy { animation: fadeUp 0.5s 0.05s ease both; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      header { padding-left: 20px; padding-right: 20px; flex-wrap: wrap; }
+      .container { padding: 0 20px; }
+      .policy { padding-top: 48px; }
+      footer { padding-left: 20px; padding-right: 20px; flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: March 2026</p>
+  <header>
+    <a href="https://quxess.github.io/q-extension-site/" class="brand">
+      <div class="brand-mark">Q</div>
+      <span class="brand-text">Q.extension</span>
+    </a>
+    <nav class="header-nav">
+      <a href="https://qextension.lemonsqueezy.com" target="_blank" rel="noopener">Store</a>
+      <a href="https://quxess.github.io/q-extension-site/">Home</a>
+    </nav>
+  </header>
 
-  <p>This privacy policy applies to the following Chrome extensions developed by <strong>Q Extension</strong>:</p>
-  <div class="badge-row">
-    <span class="badge">SnapShot</span>
-    <span class="badge">Tab Volume</span>
-    <span class="badge">Save As JPG/PNG</span>
+  <div class="container">
+    <section class="policy">
+
+      <div class="policy-header">
+        <h1>Privacy Policy</h1>
+        <div class="updated">Last updated: March 2026</div>
+      </div>
+
+      <p class="policy-intro">
+        This privacy policy applies to the following Chrome extensions developed by <strong>Q Extension</strong>:
+      </p>
+
+      <div class="badge-row">
+        <span class="badge">SnapShot</span>
+        <span class="badge">Tab Volume</span>
+        <span class="badge">Save As JPG/PNG</span>
+      </div>
+
+      <div class="section">
+        <h2>What Data We Collect</h2>
+        <p>We do not collect, store, or transmit any personal data.</p>
+        <p>Specifically, we do not collect:</p>
+        <ul>
+          <li>Browsing history</li>
+          <li>Website content</li>
+          <li>Personal identification information</li>
+          <li>Payment information</li>
+          <li>Usage analytics or telemetry</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>License Key Validation (Tab Volume)</h2>
+        <p>
+          Tab Volume offers optional premium features unlocked via a one-time license key purchase.
+          If you purchase a premium license, the license key you enter is sent to Lemon Squeezy
+          (our payment and licensing provider) solely to validate your purchase. This validation
+          happens once on activation and periodically in the background to confirm the license
+          remains valid.
+        </p>
+        <p>
+          We do not store or have access to your payment details. All payment processing is handled
+          entirely by Lemon Squeezy. For information on how Lemon Squeezy handles your data, please
+          refer to their privacy policy at
+          <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a>.
+        </p>
+        <p>
+          SnapShot and Save As JPG/PNG are currently fully free and do not involve any license key
+          validation or communication with external services.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Data Stored Locally</h2>
+        <p>
+          All data stored by these extensions remains on your device only and is never transmitted to us.
+        </p>
+
+        <div class="info-block">
+          <strong>
+            <span class="info-block-icon"><img src="icons/snapshot.png" alt="SnapShot" loading="lazy"></span>
+            SnapShot
+          </strong>
+          <ul>
+            <li>Screenshot history (images stored on your device only)</li>
+            <li>User preferences (filename pattern, image format, theme)</li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <strong>
+            <span class="info-block-icon"><img src="icons/tabvolume.png" alt="Tab Volume" loading="lazy"></span>
+            Tab Volume
+          </strong>
+          <ul>
+            <li>Per-tab volume and mute settings (premium users only)</li>
+            <li>License key and premium status</li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <strong>
+            <span class="info-block-icon"><img src="icons/saveasjpgpng.png" alt="Save As JPG/PNG" loading="lazy"></span>
+            Save As JPG/PNG
+          </strong>
+          <ul>
+            <li>User preferences (output format, JPEG quality setting)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Third Party Services</h2>
+        <p>
+          <strong>Tab Volume only</strong> interacts with the following third party service:
+        </p>
+        <div class="third-party">
+          <strong>Lemon Squeezy (lemonsqueezy.com)</strong>
+          <ul>
+            <li>Purpose: License key activation and validation</li>
+            <li>Data sent: License key only</li>
+            <li>Privacy policy: <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a></li>
+          </ul>
+        </div>
+        <p>
+          SnapShot and Save As JPG/PNG do not communicate with any external services.
+          All processing happens locally on your device.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Permissions</h2>
+        <p>
+          Each extension requests only the permissions necessary for its core functionality.
+          Detailed permission justifications are provided on each extension's Chrome Web Store listing.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Changes to This Policy</h2>
+        <p>
+          When SnapShot and Save As JPG/PNG introduce premium features in the future, this policy
+          will be updated accordingly. The updated version will always be posted at this URL with
+          a revised date.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about this privacy policy, please contact us at:
+          <a href="mailto:quxess@proton.me">quxess@proton.me</a>
+        </p>
+      </div>
+
+    </section>
   </div>
 
-  <h2>What Data We Collect</h2>
-  <p>We do not collect, store, or transmit any personal data.</p>
-  <p>Specifically, we do not collect:</p>
-  <ul>
-    <li>Browsing history</li>
-    <li>Website content</li>
-    <li>Personal identification information</li>
-    <li>Payment information</li>
-    <li>Usage analytics or telemetry</li>
-  </ul>
-
-  <h2>License Key Validation (Tab Volume)</h2>
-  <p>
-    Tab Volume offers optional premium features unlocked via a one-time license key purchase.
-    If you purchase a premium license, the license key you enter is sent to Lemon Squeezy
-    (our payment and licensing provider) solely to validate your purchase. This validation
-    happens once on activation and periodically in the background to confirm the license
-    remains valid.
-  </p>
-  <p>
-    We do not store or have access to your payment details. All payment processing is handled
-    entirely by Lemon Squeezy. For information on how Lemon Squeezy handles your data, please
-    refer to their privacy policy at
-    <a href="https://www.lemonsqueezy.com/privacy" target="_blank">lemonsqueezy.com/privacy</a>.
-  </p>
-  <p>
-    SnapShot and Save As JPG/PNG are currently fully free and do not involve any license key
-    validation or communication with external services.
-  </p>
-
-  <h2>Data Stored Locally</h2>
-  <p>
-    All data stored by these extensions remains on your device only and is never transmitted to us.
-  </p>
-
-  <div class="extension-block">
-    <strong>SnapShot</strong>
-    <ul>
-      <li>Screenshot history (images stored on your device only)</li>
-      <li>User preferences (filename pattern, image format, theme)</li>
-    </ul>
-  </div>
-
-  <div class="extension-block">
-    <strong>Tab Volume</strong>
-    <ul>
-      <li>Per-tab volume and mute settings (premium users only)</li>
-      <li>License key and premium status</li>
-    </ul>
-  </div>
-
-  <div class="extension-block">
-    <strong>Save As JPG/PNG</strong>
-    <ul>
-      <li>User preferences (output format, JPEG quality setting)</li>
-    </ul>
-  </div>
-
-  <h2>Third Party Services</h2>
-  <p>
-    <strong>Tab Volume only</strong> interacts with the following third party service:
-  </p>
-  <div class="third-party-block">
-    <strong>Lemon Squeezy (lemonsqueezy.com)</strong>
-    <ul>
-      <li>Purpose: License key activation and validation</li>
-      <li>Data sent: License key only</li>
-      <li>Privacy policy: <a href="https://www.lemonsqueezy.com/privacy" target="_blank">lemonsqueezy.com/privacy</a></li>
-    </ul>
-  </div>
-  <p>
-    SnapShot and Save As JPG/PNG do not communicate with any external services.
-    All processing happens locally on your device.
-  </p>
-
-  <h2>Permissions</h2>
-  <p>
-    Each extension requests only the permissions necessary for its core functionality.
-    Detailed permission justifications are provided on each extension's Chrome Web Store listing.
-  </p>
-
-  <h2>Changes to This Policy</h2>
-  <p>
-    When SnapShot and Save As JPG/PNG introduce premium features in the future, this policy
-    will be updated accordingly. The updated version will always be posted at this URL with
-    a revised date.
-  </p>
-
-  <h2>Contact</h2>
-  <p>
-    If you have any questions about this privacy policy, please contact us at:
-    <a href="mailto:quxess@proton.me">quxess@proton.me</a>
-  </p>
+  <hr class="divider">
 
   <footer>
-    <strong>Q Extension</strong> &nbsp;·&nbsp;
-    <a href="https://qextension.lemonsqueezy.com" target="_blank">qextension.lemonsqueezy.com</a>
+    <div class="footer-left">
+      Q.extension
+      <span class="sep">·</span>
+      Built by NYAN
+    </div>
+    <div class="footer-right">
+      <a href="https://qextension.lemonsqueezy.com" target="_blank" rel="noopener">Store</a>
+      <a href="https://quxess.github.io/q-extension-site/">Home</a>
+    </div>
   </footer>
 
 </body>

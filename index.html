@@ -4,21 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Q Extension — Chrome Extensions by NYAN</title>
+  <link rel="icon" type="image/png" href="icons/snapshot.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Geist+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f5f4f0;
+      --bg: #fafaf8;
       --surface: #ffffff;
-      --border: #e2e0d8;
-      --text: #1c1b18;
-      --muted: #888580;
-      --accent: #2d6a4f;
-      --accent-light: #e8f5ee;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
+      --surface-hover: #fefefe;
+      --border: #e8e6e1;
+      --border-light: #f0eee9;
+      --text: #18181b;
+      --text-secondary: #71717a;
+      --text-tertiary: #a1a1aa;
+      --accent: #1d4e36;
+      --accent-soft: #e6f2ec;
+      --accent-mid: #2d7a52;
+      --warm-orange: #c2700a;
+      --warm-orange-bg: #fef7ed;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono: 'Geist Mono', 'SF Mono', monospace;
+      --sans: 'Outfit', system-ui, sans-serif;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --radius: 14px;
     }
 
     html { scroll-behavior: smooth; }
@@ -29,47 +42,73 @@
       color: var(--text);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 40px;
     }
 
     /* ── Header ── */
     header {
-      padding: 48px 40px 0;
-      max-width: 960px;
-      margin: 0 auto;
+      padding: 40px 0 0;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
     .brand {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      align-items: center;
+      gap: 10px;
     }
 
-    .brand-name {
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
       font-family: var(--mono);
-      font-size: 1.1em;
+      font-size: 0.75em;
       font-weight: 500;
       letter-spacing: -0.02em;
+    }
+
+    .brand-text {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      font-weight: 500;
       color: var(--text);
+      letter-spacing: -0.01em;
     }
 
-    .brand-name span {
-      color: var(--accent);
-    }
-
-    .brand-tagline {
-      font-size: 0.82em;
-      color: var(--muted);
-      font-weight: 300;
+    .header-nav {
+      display: flex;
+      gap: 24px;
     }
 
     .header-nav a {
-      font-size: 0.85em;
-      color: var(--muted);
+      font-size: 0.82em;
+      font-weight: 400;
+      color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -78,103 +117,118 @@
 
     /* ── Hero ── */
     .hero {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 80px 40px 48px;
+      padding: 80px 0 56px;
     }
 
-    .hero-label {
+    .hero-eyebrow {
       font-family: var(--mono);
-      font-size: 0.75em;
+      font-size: 0.72em;
+      font-weight: 500;
       color: var(--accent);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .hero-label::before {
+    .hero-eyebrow::before {
       content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
+      width: 24px;
+      height: 1.5px;
       background: var(--accent);
+      border-radius: 1px;
     }
 
-    h1 {
-      font-size: clamp(2em, 5vw, 3.2em);
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2em, 5.5vw, 3.6em);
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
       color: var(--text);
-      max-width: 600px;
+      max-width: 580px;
       margin-bottom: 20px;
     }
 
-    h1 em {
-      font-style: normal;
+    .hero h1 em {
+      font-style: italic;
       color: var(--accent);
     }
 
-    .hero-sub {
-      font-size: 1em;
-      color: var(--muted);
+    .hero-desc {
+      font-size: 1.05em;
+      color: var(--text-secondary);
       font-weight: 300;
-      max-width: 480px;
+      max-width: 460px;
       line-height: 1.7;
     }
 
-    /* ── Extensions Grid ── */
+    /* ── Extension count pill ── */
+    .ext-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 28px;
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 0.72em;
+      color: var(--text-secondary);
+    }
+
+    .ext-count .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-mid);
+    }
+
+    /* ── Cards grid ── */
     .extensions {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
+      padding-bottom: 80px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
+      border-radius: var(--radius);
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      transition: box-shadow 0.2s, transform 0.2s;
+      gap: 14px;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
       position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.2s;
     }
 
     .card:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+      border-color: var(--border-light);
     }
 
-    .card:hover::before { opacity: 1; }
-
+    /* Icon from actual extension images */
     .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: var(--accent-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4em;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      flex-shrink: 0;
+    }
+
+    .card-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .card-header {
@@ -184,8 +238,14 @@
       gap: 12px;
     }
 
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     .card-title {
-      font-size: 1em;
+      font-size: 0.95em;
       font-weight: 600;
       letter-spacing: -0.01em;
       color: var(--text);
@@ -193,25 +253,27 @@
 
     .badge {
       font-family: var(--mono);
-      font-size: 0.7em;
+      font-size: 0.65em;
       padding: 3px 10px;
-      border-radius: 20px;
-      font-weight: 400;
+      border-radius: 100px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .badge-live {
-      background: var(--accent-light);
+      background: var(--accent-soft);
       color: var(--accent);
     }
 
     .badge-review {
-      background: #fef3e2;
-      color: #b45309;
+      background: var(--warm-orange-bg);
+      color: var(--warm-orange);
     }
 
     .card-desc {
       font-size: 0.88em;
-      color: var(--muted);
+      color: var(--text-secondary);
       line-height: 1.65;
       font-weight: 300;
       flex: 1;
@@ -221,16 +283,18 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border-light);
     }
 
     .card-features li {
-      font-size: 0.82em;
-      color: #555;
+      font-size: 0.8em;
+      color: var(--text-secondary);
       display: flex;
       align-items: flex-start;
       gap: 8px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .card-features li::before {
@@ -238,66 +302,75 @@
       color: var(--accent);
       font-family: var(--mono);
       flex-shrink: 0;
-      margin-top: 0px;
+      font-size: 0.85em;
+      margin-top: 1px;
     }
 
     .card-footer {
-      padding-top: 4px;
+      padding-top: 2px;
     }
 
     .cws-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.82em;
+      font-size: 0.8em;
       font-weight: 500;
-      color: var(--accent);
+      color: #fff;
+      background: var(--accent);
       text-decoration: none;
-      padding: 8px 14px;
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
+      padding: 9px 16px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.1s;
+      border: none;
     }
 
     .cws-link:hover {
-      background: var(--accent);
-      color: #fff;
+      background: var(--accent-mid);
+    }
+
+    .cws-link:active {
+      transform: scale(0.98);
     }
 
     .cws-link svg {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       flex-shrink: 0;
+      opacity: 0.8;
     }
 
     .cws-link-disabled {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.82em;
+      font-size: 0.8em;
       font-weight: 400;
-      color: var(--muted);
-      padding: 8px 14px;
+      color: var(--text-tertiary);
+      padding: 9px 16px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: default;
+      background: transparent;
+    }
+
+    .cws-link-disabled svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      opacity: 0.5;
     }
 
     /* ── Divider ── */
-    .divider {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 40px;
+    hr.divider {
       border: none;
       border-top: 1px solid var(--border);
-      margin-bottom: 0;
+      margin: 0;
     }
 
     /* ── Footer ── */
     footer {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 40px 48px;
+      padding: 28px 0 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -307,11 +380,16 @@
 
     .footer-left {
       font-family: var(--mono);
-      font-size: 0.8em;
-      color: var(--muted);
+      font-size: 0.75em;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .footer-left span { color: var(--accent); }
+    .footer-left .sep {
+      color: var(--border);
+    }
 
     .footer-right {
       display: flex;
@@ -319,146 +397,168 @@
     }
 
     .footer-right a {
-      font-size: 0.82em;
-      color: var(--muted);
+      font-size: 0.8em;
+      color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .footer-right a:hover { color: var(--text); }
 
-    /* ── Fade in ── */
+    /* ── Animations ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .hero { animation: fadeUp 0.5s ease both; }
-    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
-    .card:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
-    .card:nth-child(3) { animation: fadeUp 0.5s 0.26s ease both; }
+    header { animation: fadeUp 0.45s ease both; }
+    .hero { animation: fadeUp 0.5s 0.05s ease both; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.12s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.2s ease both; }
+    .card:nth-child(3) { animation: fadeUp 0.5s 0.28s ease both; }
+    footer { animation: fadeUp 0.4s 0.35s ease both; }
 
     /* ── Responsive ── */
     @media (max-width: 600px) {
-      header, .hero, .extensions, footer { padding-left: 20px; padding-right: 20px; }
-      .hero { padding-top: 48px; }
+      .container { padding: 0 20px; }
+      .hero { padding-top: 48px; padding-bottom: 40px; }
       .extensions { grid-template-columns: 1fr; }
       footer { flex-direction: column; align-items: flex-start; }
+      header { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand">
-      <div class="brand-name">Q<span>.</span>extension</div>
-      <div class="brand-tagline">Small tools. Real impact.</div>
-    </div>
-    <nav class="header-nav">
-      <a href="https://quxess.github.io/q-extension-site/privacy">Privacy Policy</a>
-    </nav>
-  </header>
+  <div class="container">
 
-  <section class="hero">
-    <div class="hero-label">Chrome Extensions</div>
-    <h1>Browser tools that stay <em>out of your way</em></h1>
-    <p class="hero-sub">
-      A small collection of focused Chrome extensions — each one built to solve 
-      one thing well, with no bloat, no tracking, and no subscriptions.
-    </p>
-  </section>
-
-  <section class="extensions">
-
-    <!-- SnapShot -->
-    <div class="card">
-      <div class="card-header">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="card-icon">📸</div>
-          <div class="card-title">SnapShot</div>
-        </div>
-        <span class="badge badge-live">Live</span>
+    <header>
+      <div class="brand">
+        <div class="brand-mark">Q</div>
+        <span class="brand-text">Q.extension</span>
       </div>
-      <p class="card-desc">
-        Capture anything on the web — visible area, selected region, or the full page. 
-        Annotate, blur, and save right after capture.
+      <nav class="header-nav">
+        <a href="https://qextension.lemonsqueezy.com" target="_blank">Store</a>
+        <a href="privacy">Privacy</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-eyebrow">Chrome Extensions</div>
+      <h1>Browser tools that stay <em>out of your way</em></h1>
+      <p class="hero-desc">
+        A small collection of focused Chrome extensions — each built to solve
+        one thing well, with no bloat, no tracking, and no subscriptions.
       </p>
-      <ul class="card-features">
-        <li>Three capture modes including full page</li>
-        <li>Built-in annotation and blur tools</li>
-        <li>Screenshot history with re-edit</li>
-      </ul>
-      <div class="card-footer">
-        <a class="cws-link" href="https://chromewebstore.google.com/detail/snapshot/genafeokeecllomennekdnppfmodfjhh?hl=en-US&utm_source=ext_sidebar" target="_blank">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Add to Chrome
-        </a>
+      <div class="ext-count">
+        <span class="dot"></span>
+        3 extensions
       </div>
-    </div>
+    </section>
 
-    <!-- Tab Volume -->
-    <div class="card">
-      <div class="card-header">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="card-icon">🔊</div>
-          <div class="card-title">Tab Volume</div>
+    <section class="extensions">
+
+      <!-- SnapShot -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <img src="icons/snapshot.png" alt="SnapShot icon" loading="lazy">
+            </div>
+            <div class="card-title">SnapShot</div>
+          </div>
+          <span class="badge badge-live">Live</span>
         </div>
-        <span class="badge badge-review">In Review</span>
-      </div>
-      <p class="card-desc">
-        Control audio volume independently for every tab playing sound — 
-        boost quiet tabs, silence distracting ones.
-      </p>
-      <ul class="card-features">
-        <li>Per-tab volume from 0% to 150%</li>
-        <li>Mute individual tabs or all at once</li>
-        <li>Spotify and DRM audio support</li>
-      </ul>
-      <div class="card-footer">
-        <span class="cws-link-disabled">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Coming soon
-        </span>
-      </div>
-    </div>
-
-    <!-- Save As JPG/PNG -->
-    <div class="card">
-      <div class="card-header">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="card-icon">🖼️</div>
-          <div class="card-title">Save As JPG/PNG</div>
+        <p class="card-desc">
+          Capture anything on the web — visible area, selected region, or the full page.
+          Annotate, blur, and save right after capture.
+        </p>
+        <ul class="card-features">
+          <li>Three capture modes including full page</li>
+          <li>Built-in annotation and blur tools</li>
+          <li>Screenshot history with re-edit</li>
+        </ul>
+        <div class="card-footer">
+          <a class="cws-link" href="https://chromewebstore.google.com/detail/snapshot/genafeokeecllomennekdnppfmodfjhh?hl=en-US&utm_source=ext_sidebar" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Add to Chrome
+          </a>
         </div>
-        <span class="badge badge-review">In Review</span>
       </div>
-      <p class="card-desc">
-        Right-click any image on the web and save it in your preferred format. 
-        Converts WebP and other formats instantly, client-side.
-      </p>
-      <ul class="card-features">
-        <li>Right-click any image to convert</li>
-        <li>JPG and PNG output with quality control</li>
-        <li>No upload — works entirely in your browser</li>
-      </ul>
-      <div class="card-footer">
-        <span class="cws-link-disabled">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Coming soon
-        </span>
+
+      <!-- Save As JPG/PNG -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <img src="icons/saveasjpgpng.png" alt="Save As JPG/PNG icon" loading="lazy">
+            </div>
+            <div class="card-title">Save As JPG/PNG</div>
+          </div>
+          <span class="badge badge-live">Live</span>
+        </div>
+        <p class="card-desc">
+          Right-click any image on the web and save it in your preferred format.
+          Converts WebP and other formats instantly, client-side.
+        </p>
+        <ul class="card-features">
+          <li>Right-click any image to convert</li>
+          <li>JPG and PNG output with quality control</li>
+          <li>No upload — works entirely in your browser</li>
+        </ul>
+        <div class="card-footer">
+          <a class="cws-link" href="https://chromewebstore.google.com/detail/save-as-jpgpng/bklacifbkikmemlbcmpnkkmipoifjpko?hl=en-GB&authuser=0" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Add to Chrome
+          </a>
+        </div>
       </div>
-    </div>
 
-  </section>
+      <!-- Tab Volume -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <img src="icons/tabvolume.png" alt="Tab Volume icon" loading="lazy">
+            </div>
+            <div class="card-title">Tab Volume</div>
+          </div>
+          <span class="badge badge-review">In Review</span>
+        </div>
+        <p class="card-desc">
+          Control audio volume independently for every tab playing sound —
+          boost quiet tabs, silence distracting ones.
+        </p>
+        <ul class="card-features">
+          <li>Per-tab volume from 0% to 150%</li>
+          <li>Mute individual tabs or all at once</li>
+          <li>Spotify and DRM audio support</li>
+        </ul>
+        <div class="card-footer">
+          <span class="cws-link-disabled">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Coming soon
+          </span>
+        </div>
+      </div>
 
-  <hr class="divider">
+    </section>
 
-  <footer>
-    <div class="footer-left">Q<span>.</span>extension</div>
-    <div class="footer-right">
-      <a href="https://qextension.lemonsqueezy.com" target="_blank">Store</a>
-      <a href="https://quxess.github.io/q-extension-site/privacy">Privacy Policy</a>
-    </div>
-  </footer>
+    <hr class="divider">
+
+    <footer>
+      <div class="footer-left">
+        Q.extension
+        <span class="sep">·</span>
+        Built by NYAN
+      </div>
+      <div class="footer-right">
+        <a href="https://qextension.lemonsqueezy.com" target="_blank" rel="noopener">Store</a>
+        <a href="privacy">Privacy Policy</a>
+      </div>
+    </footer>
+
+  </div>
 
 </body>
 </html>
