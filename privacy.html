@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Q Extension</title>
-  <link rel="icon" type="image/png" href="icons/snapshot.png">
+  <link rel="icon" type="image/png" href="icons/qextension.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Geist+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -75,15 +75,16 @@
     .brand-mark {
       width: 28px;
       height: 28px;
-      background: var(--accent);
       border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-family: var(--mono);
-      font-size: 0.75em;
-      font-weight: 500;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .brand-text {
@@ -342,7 +343,7 @@
 
   <header>
     <a href="https://quxess.github.io/q-extension-site/" class="brand">
-      <div class="brand-mark">Q</div>
+      <div class="brand-mark"><img src="icons/qextension.png" alt="Q Extension"></div>
       <span class="brand-text">Q.extension</span>
     </a>
     <nav class="header-nav">
